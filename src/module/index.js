@@ -29,6 +29,8 @@ const countries = [
 	},
 ];
 
+const cities = ['Aflou', 'Tlemcen', 'Annaba', 'Rabat', 'Cairo', 'Madrid', 'Zurich', 'Moskow', 'Beijin'];
+
 const config = {
 	itemLabel: 'name',
 	itemKey: 'name',
@@ -36,24 +38,36 @@ const config = {
 
 const App = () => {
 	const [country, setCountry] = useState(null);
+	const [city, setCity] = useState('');
+	const [selectedCities, setSelectedCities] = useState([]);
 	const [selectedCountries, setSelectedCountries] = useState(null);
 	const handleChange = val => {
 		setCountry(val);
 	};
 
+	const handleChangeCity = val => {
+	
+		setCity(val);
+	};
+	const handleChangeMultiCities = val => {
+		console.log('--------cities------------')
+		console.log(val)
+		console.log('--------------------')
+		setSelectedCities(val);
+	};
 	const handleChangeMulti = val => {
 		setSelectedCountries(val);
 	};
 
-	const fetchCountries= (filterValue, callback) => {
+	const fetchCountries = (filterValue, callback) => {
 		setTimeout(() => {
-		  callback(countries.filter(c=>c.name.toLowerCase().includes(filterValue.toLowerCase())));
+			callback(countries.filter(c => c.name.toLowerCase().includes(filterValue.toLowerCase())));
 		}, 4000);
-	  };
+	};
 
 	return (
 		<div className="app-demo">
-				<div className="app-demo__item">
+			<div className="app-demo__item">
 				<MDSelect
 					asyncOptions={fetchCountries}
 					label="Async"
@@ -67,13 +81,13 @@ const App = () => {
 					options={countries}
 					label="Custom rendering"
 					onChange={handleChange}
-
 					value={country}
-					renderLabel={item => <div className="app-demo_custom-label">
-						<img src={item.flag} alt='flag' height="24px" width="32px" />
-					<span>{item.label}</span>
-					</div>
-					}
+					renderLabel={item => (
+						<div className="app-demo_custom-label">
+							<img src={item.flag} alt="flag" height="24px" width="32px" />
+							<span>{item.label}</span>
+						</div>
+					)}
 					config={config}
 				/>
 			</div>
@@ -83,7 +97,6 @@ const App = () => {
 					label="Multiple"
 					value={selectedCountries}
 					onChange={handleChangeMulti}
-					
 					config={config}
 					multiple
 				/>
@@ -126,6 +139,12 @@ const App = () => {
 					onChange={handleChange}
 					config={config}
 				/>
+			</div>
+			<div className="app-demo__item">
+				<MDSelect options={cities} label="Simple select" value={city} onChange={handleChangeCity} isSimple />
+			</div>
+			<div className="app-demo__item">
+				<MDSelect multiple options={cities} label="Simple multi select" value={selectedCities} onChange={handleChangeMultiCities} isSimple />
 			</div>
 		</div>
 	);

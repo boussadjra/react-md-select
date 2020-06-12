@@ -14,6 +14,7 @@ const MDSelect = ({
 	multiple,
 	renderLabel,
 	asyncOptions,
+	isSimple,
 }) => {
 	const [selectedItem, setSelectedItem] = useState({ label: '', key: '' });
 	const [selectedItems, setSelectedItems] = useState([]);
@@ -49,7 +50,9 @@ const MDSelect = ({
 	 */
 	useEffect(() => {
 		let _value = { label: '', key: '' };
-		_value = mapConfig(value);
+	
+		_value = mapConfig(Array.isArray(value)?'':value);
+		
 		setSelectedItem(_value);
 	}, []);
 	useEffect(() => {
@@ -72,10 +75,15 @@ const MDSelect = ({
 	 */
 
 	const mapConfig = _value => {
-		return {
-			key: _value ? _value[config.itemKey ? config.itemKey : 'value'] : '',
-			label: _value ? _value[config.itemLabel ? config.itemLabel : 'label'] : '',
-		};
+		return isSimple
+			? {
+					key: _value,
+					label: _value,
+			  }
+			: {
+					key: _value ? _value[config.itemKey ? config.itemKey : 'value'] : '',
+					label: _value ? _value[config.itemLabel ? config.itemLabel : 'label'] : '',
+			  };
 	};
 	const onfocus = () => {
 		setActive(true);
@@ -83,12 +91,11 @@ const MDSelect = ({
 	};
 
 	const handleChange = e => {
-
 		if (asyncOptions) {
-		e.target.value ? setTyping(true) : setTyping(false);
+			e.target.value ? setTyping(true) : setTyping(false);
 
 			asyncOptions(e.target.value, _options => {
-				setTyping(false)
+				setTyping(false);
 				setItems(
 					_options.map(option => {
 						option = { ...option, ...mapConfig(option) };
@@ -123,12 +130,12 @@ const MDSelect = ({
 			} else {
 				_items.push(item);
 				setSelectedItems(_items);
-				onChange(_items);
+				onChange(isSimple ?  _items.map(__item => __item.label):_items );
 			}
 		} else {
 			setSelectedItem(item);
 			setShowDropdown(false);
-			onChange(item);
+			onChange(isSimple ? item.label : item);
 		}
 	};
 	const remove = () => {

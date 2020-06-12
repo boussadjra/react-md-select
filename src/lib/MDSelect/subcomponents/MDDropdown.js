@@ -7,6 +7,7 @@ const MDDropdown = ({ items, onSelectItem, selectedItem, selectedItems, multiple
 			return customLabel(item)
 		}
 		return (
+			
 			<React.Fragment>
 				{[...item.label].map((char, i) => {
 					return selectedItem.label.charAt(i).toUpperCase() === char.toUpperCase() ? (
