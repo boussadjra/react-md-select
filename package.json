@@ -1,7 +1,7 @@
 {
     "author": "BRAHIM BOUSSADJRA",
     "name": "react-md-select",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "private": false,
     "description": "It's React ⚛️ based component that allows you to select item(s) from a set of items which could be custom rendered or loaded asynchronously",
     "homepage": "http://boussadjra.github.io/react-md-select",
