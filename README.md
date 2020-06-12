@@ -1,6 +1,6 @@
 ## React MD select
 
-It's React ⚛️ based component that allows you to select item(s) from a set of items which could be custom rendered or loaded asynchronously
+It's a React ⚛️ based component that allows you to select item(s) from a set of items which could be custom rendered or loaded asynchronously
 
 ### Installation
 
@@ -80,8 +80,8 @@ export default App;
 | asyncOptions | it's used to load options asynchronously based on the typed value                   |
 | renderLabel  | that allows you to custom the label rendering                                       |
 | multiple     | that allows you to select multiple options                                          |
+| isSimple     | Indicates the options are an array of primitive values                              |
 
-
-## Demo 
+## Demo
 
 [MD Select](http://boussadjra.github.io/react-md-select)

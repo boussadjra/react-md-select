@@ -36,6 +36,7 @@
         "test": "react-scripts test",
         "eject": "react-scripts eject"
     },
+    "publishConfig": { "registry": "https://npm.pkg.github.com/" },
     "eslintConfig": {
         "extends": "react-app"
     },
