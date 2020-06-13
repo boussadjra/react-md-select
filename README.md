@@ -1,6 +1,6 @@
 ## React MD select
 
-It's a React ⚛️ based component that allows you to select item(s) from a set of items which could be custom rendered or loaded asynchronously
+It's a React ⚛️ based component that allows you to select item(s) from a set of items which could be custom rendered or loaded asynchronously, it tries to respect the Material design specifications
 
 ### Installation
 
@@ -10,7 +10,7 @@ It's a React ⚛️ based component that allows you to select item(s) from a set
 
 ```js
 import React from 'react';
-import MDSelect from '../lib';
+import MDSelect from 'react-md-select';
 import { useState } from 'react';
 import './app.scss';
 const countries = [
@@ -68,6 +68,23 @@ const App = () => {
 export default App;
 ```
 
+`app.scss`
+
+```scss
+.app-demo {
+	height: 100vh;
+	width: 100%;
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr;
+	grid-template-rows: 1fr 1fr 1fr 1fr;
+	box-shadow: 0 0 10px #e0e0e0;
+	&__item {
+		padding: 20px;
+		border: 1px solid rgb(250, 246, 246);
+	}
+}
+```
+
 ### Props
 
 | name         | description                                                                         |
@@ -81,6 +98,7 @@ export default App;
 | renderLabel  | that allows you to custom the label rendering                                       |
 | multiple     | that allows you to select multiple options                                          |
 | isSimple     | Indicates the options are an array of primitive values                              |
+| type         | Applies the alternate input style                                                   |
 
 ## Demo
 
