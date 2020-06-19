@@ -23,11 +23,14 @@ const MDSelect = ({
 	const [typing, setTyping] = useState(false);
 	const [showDropdown, setShowDropdown] = useState(false);
 	const [items, setItems] = useState([]);
+	const [paddingLeft, setPaddingLeft] = useState(0);
 	const RANDOM_ID = `mds${(Math.random() * 10000).toFixed()}`;
 	let ref = {
 		['dropdown' + RANDOM_ID]: null,
 	};
 	ref['dropdown' + RANDOM_ID] = useRef(null);
+
+	const chipRefs = useRef([]);
 	useEffect(() => {
 		/**
 		 * Alert if clicked on outside of element
@@ -50,15 +53,24 @@ const MDSelect = ({
 	 */
 	useEffect(() => {
 		let _value = { label: '', key: '' };
-	
-		_value = mapConfig(Array.isArray(value)?'':value);
-		
+
+		_value = mapConfig(Array.isArray(value) ? '' : value);
+
 		setSelectedItem(_value);
 	}, []);
 	useEffect(() => {
 		setActive(selectedItem.label ? true : false);
 	}, [selectedItem]);
 
+	useEffect(() => {
+	
+		let pl = chipRefs.current.reduce((curr,acc)=>{
+
+			return curr+=acc.offsetWidth+4;
+		},0);
+
+		setPaddingLeft(pl);
+	}, [selectedItems]);
 	useEffect(() => {
 		setItems(
 			!asyncOptions
@@ -130,7 +142,7 @@ const MDSelect = ({
 			} else {
 				_items.push(item);
 				setSelectedItems(_items);
-				onChange(isSimple ?  _items.map(__item => __item.label):_items );
+				onChange(isSimple ? _items.map(__item => __item.label) : _items);
 			}
 		} else {
 			setSelectedItem(item);
@@ -164,6 +176,7 @@ const MDSelect = ({
 			<input
 				value={selectedItem.label}
 				type="text"
+				style={{ paddingLeft: paddingLeft + 'px' }}
 				className="md-select__input"
 				onFocus={() => onfocus()}
 				onChange={e => handleChange(e)}
@@ -179,7 +192,7 @@ const MDSelect = ({
 					{selectedItems.map((item, k) => {
 						return (
 							k < 2 && (
-								<div className="md-chip" key={'si' + k}>
+								<div className="md-chip" key={'si' + k} ref={el => (chipRefs.current[k] = el)}>
 									<span className="md-chip__text">{item.label}</span>
 									<span className="md-chip__close" onClick={() => removeItem(item)}>
 										<Icon name="remove" fill="#aaa" />
@@ -189,7 +202,7 @@ const MDSelect = ({
 						);
 					})}
 					{selectedItems.length > 2 && (
-						<div className="md-chip md-chip--small" onClick={() => setShowDropdown(true)}>
+						<div className="md-chip md-chip--small" onClick={() => setShowDropdown(true)} ref={el => (chipRefs.current[2] = el)}>
 							<div className="md-chip__text">+{selectedItems.length - 2}</div>
 						</div>
 					)}
