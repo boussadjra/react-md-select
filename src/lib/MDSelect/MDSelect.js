@@ -103,10 +103,11 @@ const MDSelect = ({
 	};
 
 	const handleChange = e => {
+		const {value} = e.target;
 		if (asyncOptions) {
-			e.target.value ? setTyping(true) : setTyping(false);
+			setTyping(prevTyping => value.length > 0);
 
-			asyncOptions(e.target.value, _options => {
+			asyncOptions(value, _options => {
 				setTyping(false);
 				setItems(
 					_options.map(option => {
@@ -119,7 +120,7 @@ const MDSelect = ({
 			setItems(
 				options
 					.filter(_option => {
-						let _searchValue = e.target.value.toUpperCase();
+						let _searchValue = value.toUpperCase();
 
 						return _option.label.toUpperCase().includes(_searchValue);
 					})
@@ -129,7 +130,7 @@ const MDSelect = ({
 					})
 			);
 		}
-		setSelectedItem({ key: '', label: e.target.value });
+		setSelectedItem({ key: '', label: value });
 	};
 	const selectItem = (e, item) => {
 		//e.stopPropagation();
